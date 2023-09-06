@@ -6,5 +6,11 @@ import App from './App';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <App />
+  //  JSX
+  <>
+    <App />
+    <App></App>
+    {/*일본반 화이팅*/}
+  </>
+  
 );
