@@ -1,19 +1,77 @@
+// import React from 'react';
+// import ReactDOM from 'react-dom/client';
+// import './index.css';
+// import App from './App_propsValidation';
+// // import App from './App';
+// // import App from './App.js'; //상기 소스코드와 같은 효과
+
+// const root = ReactDOM.createRoot(document.querySelector('#root'));
+// root.render(
+//   //   JSX
+//     <>
+//       {/* {<App />} */}
+//       {/* <App></App> */}
+//       {/* <h1>일본반 화이팅</h1> */}
+//       <App />
+
+//     </>  
+// );
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App_propsValidation';
-// import App from './App';
-// import App from './App.js'; //상기 소스코드와 같은 효과
+import PropTypes from 'prop-types';
 
-const root = ReactDOM.createRoot(document.querySelector('#root'));
-root.render(
-  //   JSX
-    <>
-      {/* {<App />} */}
-      {/* <App></App> */}
-      {/* <h1>일본반 화이팅</h1> */}
-      <App />
+const SomeComponent = (props)=>{
+  // return(<>{props.data[2]}</>);
+  return(
+    <div>
+      {/* <input
+        type='text'
+        // value = {props.searchText}  value - html OK, jsx - X
+        defaultValue={props.searchText}
+      /> */}
 
-    </>  
+      <input
+        type='text'
+        defaultValue={props.data[2]}
+        style={
+          {
+            marginTop:'50px',
+            marginLeft:'50px',
+            marginRight:'50px',
+            marginBottom:'50px',
+            padding:'25px',
+            borderRadius:'4px',
+            border:'1px solid #f75211',
+          }
+        }
+      />
+      <span>{typeof(props.data[2])}</span>
+    </div>
+  )
+};
+
+SomeComponent.propTypes = {
+  // data:PropTypes.arrayOf(PropTypes.number),
+  // searchText:PropTypes.oneOf(['male', 'female'])
+  data:PropTypes.arrayOf(
+    PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+      PropTypes.bool
+    ])
+  )
+};
+
+//ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.createRoot(document.querySelector('#root')).render(
+  <>
+    {/* <h1>hello</h1> */}
+    {/* <SomeComponent data={[1,2,3,4,5]} /> */}
+    {/* props로 배열전달시 {배열명} */}
+    {/* <SomeComponent searchText='female' />
+    <SomeComponent searchText='abc' /> */}
+    {/* <SomeComponent data={[1,2,3,4,5]} /> */}
+    <SomeComponent data={['korea',2,3,4,true]} />
+  </>
 );
-
