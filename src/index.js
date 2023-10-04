@@ -1,77 +1,48 @@
-// import React from 'react';
-// import ReactDOM from 'react-dom/client';
-// import './index.css';
-// import App from './App_propsValidation';
-// // import App from './App';
-// // import App from './App.js'; //상기 소스코드와 같은 효과
-
-// const root = ReactDOM.createRoot(document.querySelector('#root'));
-// root.render(
-//   //   JSX
-//     <>
-//       {/* {<App />} */}
-//       {/* <App></App> */}
-//       {/* <h1>일본반 화이팅</h1> */}
-//       <App />
-
-//     </>  
-// );
-
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import PropTypes from 'prop-types';
 
-const SomeComponent = (props)=>{
-  // return(<>{props.data[2]}</>);
+const SideMenu =(props)=>{
+  console.log(props.showMenu);
   return(
-    <div>
-      {/* <input
-        type='text'
-        // value = {props.searchText}  value - html OK, jsx - X
-        defaultValue={props.searchText}
-      /> */}
+    <>
+      <div
+        style={{
+          border:'1px solid rgba(244,67,54,1.0)',
+          width:'200px',
+          height:'94vh', // viewport height, vw : viewport width
+          padding:'10px',
+          textAlign:props.direction,
+          textTransform:'uppercase',
+        }}
+      >
+        {props.direction}
+        <ul style={{listStyle:'none', paddingLeft:'0px', lineHeight:'1.6rem'}}>
+          <li>Lorem.</li>
+          <li>Aliquid?</li>
+          <li>Fuga?</li>
+          <li>Sed.</li>
+          <li>Provident?</li>
+        </ul>
+      </div>
+    </>
+  );
+}
 
-      <input
-        type='text'
-        defaultValue={props.data[2]}
-        style={
-          {
-            marginTop:'50px',
-            marginLeft:'50px',
-            marginRight:'50px',
-            marginBottom:'50px',
-            padding:'25px',
-            borderRadius:'4px',
-            border:'1px solid #f75211',
-          }
-        }
-      />
-      <span>{typeof(props.data[2])}</span>
-    </div>
-  )
-};
+const App = (props)=>{
+  // const showMenu = props.showMenu;
+  const {showMenu} = props;
 
-SomeComponent.propTypes = {
-  // data:PropTypes.arrayOf(PropTypes.number),
-  // searchText:PropTypes.oneOf(['male', 'female'])
-  data:PropTypes.arrayOf(
-    PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number,
-      PropTypes.bool
-    ])
-  )
-};
+  return(
+    <>
+    {showMenu && <SideMenu direction='left'/>}
+    </>
+  );
+}
 
-//ReactDOM.createRoot(document.getElementById('root')).render(
+
 ReactDOM.createRoot(document.querySelector('#root')).render(
   <>
-    {/* <h1>hello</h1> */}
-    {/* <SomeComponent data={[1,2,3,4,5]} /> */}
-    {/* props로 배열전달시 {배열명} */}
-    {/* <SomeComponent searchText='female' />
-    <SomeComponent searchText='abc' /> */}
-    {/* <SomeComponent data={[1,2,3,4,5]} /> */}
-    <SomeComponent data={['korea',2,3,4,true]} />
+  <App showMenu={false} />
   </>
+
 );
