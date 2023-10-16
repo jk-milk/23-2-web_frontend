@@ -1,0 +1,22 @@
+body, div{
+  margin: 0;
+  padding:0;
+  font-family: '나눔바른고딕';
+  box-sizing: border-box;  
+  
+}
+/* 
+  border-box: border 위주, 외형의 크기가 절대 변경 안됨
+  content-box: content 위주, 내용부분의 크기에 따라 박스크기 변경
+*/
+
+.textBox{
+  background-color: red; width: 500px; height: 100px;
+}
+
+.textBox2{
+  background-color: skyblue; width: 500px; height: 100px;
+  border: 10px solid;
+  /* box-sizing: border-box; */
+  box-sizing: content-box;
+}

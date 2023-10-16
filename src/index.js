@@ -1,82 +1,79 @@
-import React from 'react';
+import React,{useState, useEffect} from 'react';
 import ReactDOM from 'react-dom/client';
-import "./App.css";
 
-// // [1] with JSX
-// const element1 = (
-//   <>
-//     <h1 className="App">
-//       영진 컴정 일본IT JI-A(AI SW)반
-//     </h1>
-//   </>
-// );
+// useState, useEffect 예시
 
-// // [2] Non JSX
-// const element2 = React.createElement(
-//   'h1',
-//   {className: 'App', name: '김영진'},
-//   '영진 컴정 일본IT JI-A(AI SW)반 화이팅', 'a', 'b', 'c'
-// )
+const Info  = (props)=>{
+  const [name,setName] = useState('');
+  const [pwd, setPwd] = useState('');
 
-// console.log(typeof element1);
-// console.log(typeof element2);
-// console.log(element1.props.className);
-// console.log(element2.props.className);
-// console.log(element1.children);
-// console.log(element2.children);
-// console.log(element2.props.name);
-// console.log(element1);
-// console.log(element2);
-
-// ReactDOM.createRoot(document.querySelector('#root')).render(
-//   // <>{element1}</>
-//   // element1
-//   // element2
-
-//   <>
-//     {element1}
-//     {element2}
-//   </>
-// );
-
-// [1] Function style - non JSX
-
-const Greeting = (props)=>{
-  const ch = ['안녕','영진', '컴정', props.name, '님']
-  return(
-    React.createElement('div',{id:'hello'},[...ch])
+  useEffect(
+    ()=>{
+      console.log('렌더링 완료됨');
+      console.log(
+        {name,pwd}
+        // {name:name, pwd:pwd}
+      );
+      // 로그인처리---> 성공하면
+      return (  // cleanup
+        ()=>{
+          console.log('뒷처리');
+          console.log(
+            {name,pwd}
+          );
+        }
+      );
+    }
+    //,[]
+    ,[name]
   );
+ 
+
+  const changeName = (e)=>{
+    setName(e.target.value);
+  };
+  const changePwd = (e)=>{
+    setPwd(e.target.value);
+  };
+  return (<>
+    <input value={name} onChange = {changeName} />
+    <input value={pwd} onChange = {changePwd} />
+    <hr />
+    <div>
+      <div><b>이름:</b>{name}</div>
+    </div>
+    <div>
+      <div><b>패스워드:</b>{pwd}</div>
+    </div>
+
+  </>);
 };
 
-// [2] Class style - non JSX
-class Greeting2 extends React.Component{
-  render() {
-    const ch = ['안녕','영진', '컴정', this.props.name, '님']
-    return(
-      React.createElement('div',{id:'hello2'},[...ch])
-    );
-  }
-}
-
-// [3] Function style - with JSX
-const Greeting3 = (props)=>{
-  return(
+const App = ()=>{
+  const [visible,setVisible] = useState(false);
+  return (
     <>
-      <div id='hello3'>
-        {`안녕 영진 컴정${props.name}님`}
+      <div 
+        onClick={
+          ()=>{
+            setVisible(!visible);
+          }
+        }
+      >
+        <button>
+          {visible?'숨기기':'보이기'}
+        </button>
       </div>
+      <hr />
+      {visible && <Info />}
     </>
   )
-}
 
-ReactDOM.createRoot(document.querySelector('#root')).render(
-  // <>{element1}</>
-  // element1
-  // element2
+};
 
+ReactDOM.createRoot(document.querySelector('#root')).render( 
   <>
-    <Greeting name='김영진' />
-    <Greeting2 name='이영진' />
-    <Greeting3 name='최영진' />
+   <App />
   </>
 );
+
