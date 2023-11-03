@@ -6,14 +6,41 @@ import Travels, { exptravels } from './Travels';
 
 export default function TravelForm() {
   const [travels, setTravels] = useState([]);
+  const [modifyMode, setModifyMode] = useState(true);
   useEffect(()=>{
     fetch("http://localhost:3001/travels") //Promise 처리, GET /travels Read
     .then((response)=>response.json())
-    .then((jsonData) => setTravels([...jsonData]));
+    .then((jsonData)=>setTravels([...jsonData]));
   },[])
 
+  const UpdateForm = ()=>{
+    return(
+      <form>
+        <div className='input-group input-group-lg mb-2'>
+          
+          {/* lg: large sm:small         mb: margin bottom */}
+          <span className='input-group-text'>인덱스번호</span>
+          <input className='form-control' type="text" name='id' autoComplete='off'/>
+        </div>
+        <div className='input-group input-group-lg mb-2'>
+          {/* lg: large         mb: margin bottom */}
+          <span className='input-group-text'>여행지 국가</span>
+          <input className='form-control' type="text" name='name' autoComplete='off'/>
+        </div>
+        <div className='input-group input-group-lg mb-2'>
+          {/* lg: large         mb: margin bottom */}
+          <span className='input-group-text'>대표 이미지</span>
+          <input className='form-control' type="text" name='image' autoComplete='off'/>
+        </div>
+        <input type="submit" className='btn btn-primary' value='정보수정' />
+      </form>
+    )
+  }
+
   const clickHandlerModify = (data, event)=>{
+    event.preventDefault();
     console.log(data, event);
+    setModifyMode(!modifyMode);
   }
   
   return (
@@ -26,8 +53,9 @@ export default function TravelForm() {
         <p><input className={styles.inputbox} type="text" name='name' placeholder='여행지 국가이름' autoComplete='off'/></p>
         <p><input className={styles} type="text" name='name' placeholder='여행지 대표이미지' autoComplete='off'/></p>
       </form> */}
-
-      <form className={styles}
+    {
+      modifyMode?
+      (<form className={styles}
         onSubmit={
           (event)=>{
             event.preventDefault(); //reload 방지
@@ -62,9 +90,11 @@ export default function TravelForm() {
                 method:'POST', // PUT, PATCH, DELETE
                 headers:{"Content-type":"application/json",}, // HTTP Request Header설정
                 body:   // body, params(:data), query(url에서 ?뒤에 key=value&...)
-                      JSON.stringify(newArticle), // 직력화(Serialization) - 문자열로 변경
+                      JSON.stringify(newArticle), // 직렬화(Serialization) - 문자열로 변경
               }
-            ).then((response)=>{console.log(response)});
+            ).then((response)=>{
+              // console.log(response)
+            });
           }
         }
       >
@@ -117,7 +147,13 @@ export default function TravelForm() {
             )
           )}
         </ul>
-      </form>
+      </form>):(
+        <>
+          <h1>Update 화면</h1>
+          <UpdateForm />
+        </>
+      )
+    }
     </div>
   );
 }
